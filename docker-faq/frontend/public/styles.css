@@ -1,0 +1,8 @@
+body { font-family: sans-serif; color: black; background: white; margin: 0; }
+.container { max-width: 800px; margin: 0 auto; padding: 1rem; }
+h1 { border-bottom: 1px solid gray; padding-bottom: 0.5rem; }
+.faq-item { border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem; }
+.faq-question { font-weight: bold; margin: 0 0 0.5rem; }
+.faq-answer { margin: 0 0 0.5rem; }
+.faq-category { font-size: 0.85rem; color: gray; margin: 0 0 0.25rem; }
+.empty-state { padding: 1rem; border: 1px solid #ccc; color: gray; }

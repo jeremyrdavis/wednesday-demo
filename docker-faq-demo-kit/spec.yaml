@@ -1,0 +1,67 @@
+schemaVersion: "1"
+kind: sandbox
+name: docker-faq-demo
+displayName: Docker FAQ Demo Agent
+description: >
+  Claude Code packaged for the FAQ demo: brand guidance in agent memory,
+  network access scoped to the demo's tasks.
+
+sandbox:
+  image: "docker/sandbox-templates:claude-code-docker"
+  aiFilename: CLAUDE.md
+  entrypoint:
+    run: [claude, "--dangerously-skip-permissions"]
+
+network:
+  serviceDomains:
+    api.anthropic.com: anthropic
+    console.anthropic.com: anthropic
+  serviceAuth:
+    anthropic:
+      headerName: x-api-key
+      valueFormat: "%s"
+  allowedDomains:
+    - "claude.com:443"
+    - claude.ai
+    # GitHub — clone, push, gh pr create
+    - github.com
+    - api.github.com
+    # Brand typography (issue 3) — BOTH domains required:
+    # googleapis serves the CSS, gstatic serves the font files
+    - fonts.googleapis.com
+    - fonts.gstatic.com
+    # Package managers (agents install deps to test their work)
+    - pypi.org
+    - files.pythonhosted.org
+    - registry.npmjs.org
+    # Docker Hub pulls (agents run postgres etc. on their in-sandbox daemon)
+    - hub.docker.com
+    - registry-1.docker.io
+    - auth.docker.io
+    - production.cloudflare.docker.com
+    # NOTE: docker.com is deliberately NOT allowed — the brand guide
+    # forbids fetching it, and the policy log proving a blocked probe
+    # is a bonus governance beat.
+
+credentials:
+  sources:
+    anthropic:
+      env:
+        - ANTHROPIC_API_KEY
+
+environment:
+  variables:
+    IS_SANDBOX: "1"
+
+commands:
+  install:
+    - command: "curl -fsSL https://claude.ai/install.sh | bash"
+      user: "1000"
+      description: Install Claude Code
+
+agentContext: |
+  A Docker brand style guide is available at /home/agent/docker-brand.md.
+  For ANY styling or visual design work, follow it exactly: palette,
+  typography, spacing, and component guidance. Do not fetch docker.com or
+  any other external site for design reference — everything you need is
+  in that file.
