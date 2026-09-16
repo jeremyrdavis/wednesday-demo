@@ -15,7 +15,7 @@ async function loadFaqs() {
       const article = document.createElement('article');
       article.className = 'faq-item';
       article.innerHTML = `
-        <p class="faq-category">${faq.category}</p>
+        <span class="faq-category">${faq.category}</span>
         <p class="faq-question">${faq.question}</p>
         <p class="faq-answer">${faq.answer}</p>
       `;
